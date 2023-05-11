@@ -1,0 +1,5 @@
+Record=TopLevelDocument|FileName=upper-pcb.SchDoc|SheetNumber=1
+Record=SheetSymbol|SourceDocument=upper-pcb.SchDoc|Designator=CH1|SchDesignator=CH1|FileName=channel.SchDoc|SheetNumber=2|SymbolType=Normal|RawFileName=channel.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=upper-pcb.SchDoc|Designator=CH2|SchDesignator=CH2|FileName=channel.SchDoc|SheetNumber=2|SymbolType=Normal|RawFileName=channel.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=upper-pcb.SchDoc|Designator=CH3|SchDesignator=CH3|FileName=channel.SchDoc|SheetNumber=2|SymbolType=Normal|RawFileName=channel.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=upper-pcb.SchDoc|Designator=CH4|SchDesignator=CH4|FileName=channel.SchDoc|SheetNumber=2|SymbolType=Normal|RawFileName=channel.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
