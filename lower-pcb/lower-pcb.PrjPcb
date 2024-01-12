@@ -32,6 +32,7 @@ ReportSuppressedErrorsInMessages=0
 FSMCodingStyle=eFMSDropDownList_OneProcess
 FSMEncodingStyle=eFMSDropDownList_OneHot
 IsProjectConflictPreventionWarningsEnabled=0
+ConstraintManagerFlow=0
 IsVirtualBomDocumentRemoved=0
 OutputPath=
 LogFolderPath=
@@ -98,6 +99,91 @@ ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=FFTOZVPD
+
+[Document4]
+DocumentPath=lower-pcb.BomDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=
+
+[GeneratedDocument1]
+DocumentPath=./\lower-pcb_gerber\NC Drill\lower-pcb-NonPlated.TXT
+DItemRevisionGUID=
+
+[GeneratedDocument2]
+DocumentPath=./\lower-pcb_gerber\NC Drill\lower-pcb-Plated.TXT
+DItemRevisionGUID=
+
+[GeneratedDocument3]
+DocumentPath=./\lower-pcb_gerber\NC Drill\lower-pcb.DRR
+DItemRevisionGUID=
+
+[GeneratedDocument4]
+DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.EXTREP
+DItemRevisionGUID=
+
+[GeneratedDocument5]
+DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.GBL
+DItemRevisionGUID=
+
+[GeneratedDocument6]
+DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.GBO
+DItemRevisionGUID=
+
+[GeneratedDocument7]
+DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.GBP
+DItemRevisionGUID=
+
+[GeneratedDocument8]
+DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.GBS
+DItemRevisionGUID=
+
+[GeneratedDocument9]
+DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.GM1
+DItemRevisionGUID=
+
+[GeneratedDocument10]
+DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.GTL
+DItemRevisionGUID=
+
+[GeneratedDocument11]
+DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.GTO
+DItemRevisionGUID=
+
+[GeneratedDocument12]
+DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.GTP
+DItemRevisionGUID=
+
+[GeneratedDocument13]
+DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.GTS
+DItemRevisionGUID=
+
+[GeneratedDocument14]
+DocumentPath=./\lower-pcb_gerber\NC Drill\lower-pcb.LDP
+DItemRevisionGUID=
+
+[GeneratedDocument15]
+DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.REP
+DItemRevisionGUID=
+
+[GeneratedDocument16]
+DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.RUL
+DItemRevisionGUID=
+
+[GeneratedDocument17]
+DocumentPath=./\lower-pcb_gerber\Pick Place\Pick Place for lower-pcb.csv
+DItemRevisionGUID=
 
 [Configuration1]
 Name=Sources
@@ -304,6 +390,18 @@ OutputDocumentPath13=
 OutputVariantName13=
 OutputDefault13=0
 PageOptions13=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
+OutputType14=PCBDrawing
+OutputName14=Draftsman
+OutputDocumentPath14=
+OutputVariantName14=[No Variations]
+OutputDefault14=0
+PageOptions14=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
+OutputType15=PCBDrawing
+OutputName15=Draftsman
+OutputDocumentPath15=
+OutputVariantName15=[No Variations]
+OutputDefault15=0
+PageOptions15=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
 
 [OutputGroup4]
 Name=Assembly Outputs
@@ -804,6 +902,22 @@ Type117=1
 Type118=1
 Type119=1
 Type120=1
+Type121=1
+Type122=1
+Type123=1
+Type124=1
+Type125=1
+Type126=1
+Type127=1
+Type128=1
+Type129=1
+Type130=1
+Type131=1
+Type132=1
+Type133=1
+Type134=1
+Type135=1
+Type136=1
 
 [Difference Levels]
 Type1=1
@@ -874,6 +988,12 @@ Type65=1
 Type66=1
 Type67=1
 Type68=1
+Type69=1
+Type70=1
+Type71=1
+Type72=1
+Type73=1
+Type74=1
 
 [Electrical Rules Check]
 Type1=1
@@ -995,6 +1115,7 @@ Type116=2
 Type117=3
 Type118=3
 Type119=3
+MultiChannelAlternate=0
 AlternateItemFail=3
 Type122=2
 Type123=1
@@ -1002,6 +1123,30 @@ Type124=1
 Type125=1
 Type126=1
 Type127=1
+Type128=2
+Type129=2
+Type130=2
+Type131=2
+Type132=2
+Type133=2
+Type134=2
+Type135=2
+Type136=2
+Type137=2
+Type138=1
+Type139=1
+Type140=1
+Type141=1
+Type142=1
+Type143=1
+Type144=1
+Type145=1
+Type146=1
+Type147=2
+Type148=2
+Type149=2
+Type150=2
+Type151=2
 
 [ERC Connection Matrix]
 L1=NNNNNNNNNNNWNNNWW

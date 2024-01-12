@@ -134,8 +134,93 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
+[Document6]
+DocumentPath=upper-pcb.BomDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=
+
 [GeneratedDocument1]
 DocumentPath=Project Outputs for upper-pcb\Design Rule Check - upper-pcb.html
+DItemRevisionGUID=
+
+[GeneratedDocument2]
+DocumentPath=./\upper-pcb_gerber\Pick Place\Pick Place for upper-pcb.csv
+DItemRevisionGUID=
+
+[GeneratedDocument3]
+DocumentPath=./\upper-pcb_gerber\NC Drill\upper-pcb-NonPlated.TXT
+DItemRevisionGUID=
+
+[GeneratedDocument4]
+DocumentPath=./\upper-pcb_gerber\NC Drill\upper-pcb-Plated.TXT
+DItemRevisionGUID=
+
+[GeneratedDocument5]
+DocumentPath=./\upper-pcb_gerber\NC Drill\upper-pcb.DRR
+DItemRevisionGUID=
+
+[GeneratedDocument6]
+DocumentPath=./\upper-pcb_gerber\Gerber\upper-pcb.EXTREP
+DItemRevisionGUID=
+
+[GeneratedDocument7]
+DocumentPath=./\upper-pcb_gerber\Gerber\upper-pcb.GBL
+DItemRevisionGUID=
+
+[GeneratedDocument8]
+DocumentPath=./\upper-pcb_gerber\Gerber\upper-pcb.GBO
+DItemRevisionGUID=
+
+[GeneratedDocument9]
+DocumentPath=./\upper-pcb_gerber\Gerber\upper-pcb.GBP
+DItemRevisionGUID=
+
+[GeneratedDocument10]
+DocumentPath=./\upper-pcb_gerber\Gerber\upper-pcb.GBS
+DItemRevisionGUID=
+
+[GeneratedDocument11]
+DocumentPath=./\upper-pcb_gerber\Gerber\upper-pcb.GM1
+DItemRevisionGUID=
+
+[GeneratedDocument12]
+DocumentPath=./\upper-pcb_gerber\Gerber\upper-pcb.GTL
+DItemRevisionGUID=
+
+[GeneratedDocument13]
+DocumentPath=./\upper-pcb_gerber\Gerber\upper-pcb.GTO
+DItemRevisionGUID=
+
+[GeneratedDocument14]
+DocumentPath=./\upper-pcb_gerber\Gerber\upper-pcb.GTP
+DItemRevisionGUID=
+
+[GeneratedDocument15]
+DocumentPath=./\upper-pcb_gerber\Gerber\upper-pcb.GTS
+DItemRevisionGUID=
+
+[GeneratedDocument16]
+DocumentPath=./\upper-pcb_gerber\NC Drill\upper-pcb.LDP
+DItemRevisionGUID=
+
+[GeneratedDocument17]
+DocumentPath=./\upper-pcb_gerber\Gerber\upper-pcb.REP
+DItemRevisionGUID=
+
+[GeneratedDocument18]
+DocumentPath=./\upper-pcb_gerber\Gerber\upper-pcb.RUL
 DItemRevisionGUID=
 
 [Configuration1]
@@ -412,6 +497,10 @@ OutputName5=Gerber Files
 OutputDocumentPath5=
 OutputVariantName5=[No Variations]
 OutputDefault5=0
+Configuration5_Name1=ForceUpdateSettings
+Configuration5_Item1=False
+Configuration5_Name2=OutputConfigurationParameter1
+Configuration5_Item2=AddToAllLayerClasses.Set= |AddToAllPlots.Set=SerializeLayerHash.Version~2,ClassName~TPlotLayerStateArray|BoardID=NTKCDITG|CentrePlots=False|DrillDrawingSymbol=GraphicsSymbol|DrillDrawingSymbolSize=500000|EmbeddedApertures=True|FilmBorderSize=10000000|FilmXSize=200000000|FilmYSize=160000000|FlashAllFills=False|FlashPadShapes=True|G54OnApertureChange=False|GenerateDRCRulesFile=False|GenerateDRCRulesFile=False|GenerateReliefShapes=True|GenerateReports=True|GerberUnit=Metric|GerberUnit=Metric|IncludeUnconnectedMidLayerPads=True|LayerClassesMirror.Set= |LayerClassesPlot.Set= |LeadingAndTrailingZeroesMode=SuppressLeadingZeroes|MaxApertureSize=2500000|MergePadAndRegion=False|MinusApertureTolerance=50|MinusApertureTolerance=50|Mirror.Set=SerializeLayerHash.Version~2,ClassName~TPlotLayerStateArray|MirrorDrillDrawingPlots=False|MirrorDrillGuidePlots=False|NoRegularPolygons=False|NumberOfDecimals=4|NumberOfDecimals=4|OptimizeChangeLocationCommands=True|OptimizeChangeLocationCommands=True|OriginPosition=Relative|OutputFormat=Different|Panelize=False|Plot.Set=SerializeLayerHash.Version~2,ClassName~TPlotLayerStateArray|PlotBoardProfile=False|PlotBoardProfileFileName= |PlotPositivePlaneLayers=False|PlotUsedDrillDrawingLayerPairs=False|PlotUsedDrillGuideLayerPairs=False|PlusApertureTolerance=50|PlusApertureTolerance=50|Record=GerberView|SoftwareArcs=False|Sorted=False|Sorted=False|DocumentPath=C:\Users\gregg\repos\power-meter\upper-pcb\upper-pcb.PcbDoc
 OutputType6=Gerber X2
 OutputName6=Gerber X2 Files
 OutputDocumentPath6=
