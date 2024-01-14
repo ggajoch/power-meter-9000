@@ -1,0 +1,142 @@
+esphome:
+  name: power-meter-9000
+  friendly_name: power-meter-9000
+
+esp32:
+  board: esp32-s2-saola-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+  level: DEBUG
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "<---- REDACTED ---->"
+
+ota:
+  password: "<---- REDACTED ---->"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Power-Meter-9000"
+    password: "<---- REDACTED ---->"
+
+captive_portal:
+
+uart:
+  tx_pin: GPIO40
+  rx_pin: GPIO39
+  baud_rate: 4800
+  parity: NONE
+  stop_bits: 2
+
+external_components:
+    source: github://ggajoch/power-meter-9000
+
+sensor:
+  - platform: bl0939addr
+    id: ch1
+    update_interval: 10s
+    voltage:
+      name: 'ch1_v'
+    current_1:
+      name: 'ch1_c1'
+    current_2:
+      name: 'ch1_c2'
+    active_power_1:
+      name: 'ch1_p1'
+    active_power_2:
+      name: 'ch1_p2'
+    energy_1:
+      name: 'ch1_e1'
+    energy_2:
+      name: 'ch1_e2'
+    energy_total:
+      name: 'ch1'
+    address: 0
+    current_reference: 438921.675 # 324004*(3.3*1000)/2000/1.218
+    voltage_reference: 17483.267 # 79931 * 0.97 * 1000 / (1.218 * (3640 + 0.97))
+    power_reference: 1198.864 # current_reference * voltage_reference * 2023 / 12948981862
+    energy_reference: 10289.932 # 3.6e6/(1638.4 * 256) * power_reference
+
+  - platform: bl0939addr
+    id: ch2
+    update_interval: 10s
+    voltage:
+      name: 'ch2_v'
+    current_1:
+      name: 'ch2_c1'
+    current_2:
+      name: 'ch2_c2'
+    active_power_1:
+      name: 'ch2_p1'
+    active_power_2:
+      name: 'ch2_p2'
+    energy_1:
+      name: 'ch2_e1'
+    energy_2:
+      name: 'ch2_e2'
+    energy_total:
+      name: 'ch2'
+    address: 15
+    current_reference: 438921.675 # 324004*(3.3*1000)/2000/1.218
+    voltage_reference: 17483.267 # 79931 * 0.97 * 1000 / (1.218 * (3640 + 0.97))
+    power_reference: 1198.864 # current_reference * voltage_reference * 2023 / 12948981862
+    energy_reference: 10289.932 # 3.6e6/(1638.4 * 256) * power_reference
+
+  - platform: bl0939addr
+    id: ch3
+    update_interval: 10s
+    voltage:
+      name: 'ch3_v'
+    current_1:
+      name: 'ch3_c1'
+    current_2:
+      name: 'ch3_c2'
+    active_power_1:
+      name: 'ch3_p1'
+    active_power_2:
+      name: 'ch3_p2'
+    energy_1:
+      name: 'ch3_e1'
+    energy_2:
+      name: 'ch3_e2'
+    energy_total:
+      name: 'ch3'
+    address: 3
+    current_reference: 438921.675 # 324004*(3.3*1000)/2000/1.218
+    voltage_reference: 17483.267 # 79931 * 0.97 * 1000 / (1.218 * (3640 + 0.97))
+    power_reference: 1198.864 # current_reference * voltage_reference * 2023 / 12948981862
+    energy_reference: 10289.932 # 3.6e6/(1638.4 * 256) * power_reference
+
+  - platform: bl0939addr
+    id: ch4
+    update_interval: 10s
+    voltage:
+      name: 'ch4_v'
+    current_1:
+      name: 'ch4_c1'
+    current_2:
+      name: 'ch4_c2'
+    active_power_1:
+      name: 'ch4_p1'
+    active_power_2:
+      name: 'ch4_p2'
+    energy_1:
+      name: 'ch4_e1'
+    energy_2:
+      name: 'ch4_e2'
+    energy_total:
+      name: 'ch4'
+    address: 12
+    current_reference: 438921.675 # 324004*(3.3*1000)/2000/1.218
+    voltage_reference: 17483.267 # 79931 * 0.97 * 1000 / (1.218 * (3640 + 0.97))
+    power_reference: 1198.864 # current_reference * voltage_reference * 2023 / 12948981862
+    energy_reference: 10289.932 # 3.6e6/(1638.4 * 256) * power_reference
