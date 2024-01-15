@@ -90,7 +90,7 @@ AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
 AnnotateSuffix=
 AnnotateScope=All
-AnnotateOrder=-1
+AnnotateOrder=0
 DoLibraryUpdate=1
 DoDatabaseUpdate=1
 ClassGenCCAutoEnabled=1
@@ -116,74 +116,6 @@ ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
-
-[GeneratedDocument1]
-DocumentPath=./\lower-pcb_gerber\NC Drill\lower-pcb-NonPlated.TXT
-DItemRevisionGUID=
-
-[GeneratedDocument2]
-DocumentPath=./\lower-pcb_gerber\NC Drill\lower-pcb-Plated.TXT
-DItemRevisionGUID=
-
-[GeneratedDocument3]
-DocumentPath=./\lower-pcb_gerber\NC Drill\lower-pcb.DRR
-DItemRevisionGUID=
-
-[GeneratedDocument4]
-DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.EXTREP
-DItemRevisionGUID=
-
-[GeneratedDocument5]
-DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.GBL
-DItemRevisionGUID=
-
-[GeneratedDocument6]
-DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.GBO
-DItemRevisionGUID=
-
-[GeneratedDocument7]
-DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.GBP
-DItemRevisionGUID=
-
-[GeneratedDocument8]
-DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.GBS
-DItemRevisionGUID=
-
-[GeneratedDocument9]
-DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.GM1
-DItemRevisionGUID=
-
-[GeneratedDocument10]
-DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.GTL
-DItemRevisionGUID=
-
-[GeneratedDocument11]
-DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.GTO
-DItemRevisionGUID=
-
-[GeneratedDocument12]
-DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.GTP
-DItemRevisionGUID=
-
-[GeneratedDocument13]
-DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.GTS
-DItemRevisionGUID=
-
-[GeneratedDocument14]
-DocumentPath=./\lower-pcb_gerber\NC Drill\lower-pcb.LDP
-DItemRevisionGUID=
-
-[GeneratedDocument15]
-DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.REP
-DItemRevisionGUID=
-
-[GeneratedDocument16]
-DocumentPath=./\lower-pcb_gerber\Gerber\lower-pcb.RUL
-DItemRevisionGUID=
-
-[GeneratedDocument17]
-DocumentPath=./\lower-pcb_gerber\Pick Place\Pick Place for lower-pcb.csv
-DItemRevisionGUID=
 
 [Configuration1]
 Name=Sources
