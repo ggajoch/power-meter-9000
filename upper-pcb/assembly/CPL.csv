@@ -1,0 +1,93 @@
+Altium Designer Pick and Place Locations,,,,
+C:\Users\gregg\repos\power-meter\upper-pcb\./\assembly\Pick Place\Pick Place for upper-pcb.csv,,,,
+,,,,
+========================================================================================================================,,,,
+File Design Information:,,,,
+,,,,
+Date:       15.01.24,,,,
+Time:       18:48,,,,
+Revision:   abfb595d6ad4cbec96cba308f040f5ff920c88ea,,,,
+Variant:    No variations,,,,
+Units used: mm,,,,
+,,,,
+Designator,Center-X(mm),Center-Y(mm),Layer,Rotation
+C10,103.3272,143.1544,TopLayer,0
+P2_CH4,109.4178,155.8972,TopLayer,180
+P2_CH3,126.3273,155.8972,TopLayer,180
+P2_CH2,134.782,108.085,TopLayer,0
+P2_CH1,117.8725,108.085,TopLayer,0
+P1_CH4,117.8725,155.8972,TopLayer,180
+P1_CH3,134.782,155.8972,TopLayer,180
+P1_CH2,126.3273,108.085,TopLayer,0
+P1_CH1,109.4178,108.085,TopLayer,0
+U1_ch3,131.8525,141.123,TopLayer,180
+C2_ch1,113.65,117.15,TopLayer,90
+M1,103.84,131.885,TopLayer,90
+M2,124.16,131.885,TopLayer,90
+U1_ch4,112.9325,141.3,TopLayer,180
+U1_ch2,131.8409,123.2438,TopLayer,0
+R8_ch4,107.5,144.925,TopLayer,90
+R8_ch3,126.42,144.748,TopLayer,90
+R8_ch2,137.2734,119.6188,TopLayer,270
+R7_ch4,106.25,144.925,TopLayer,90
+R7_ch3,125.17,144.748,TopLayer,90
+R7_ch2,138.5234,119.6188,TopLayer,270
+R6_ch4,110.45,148.575,TopLayer,270
+R6_ch3,129.37,148.398,TopLayer,270
+R6_ch2,134.3234,115.9688,TopLayer,90
+R5_ch4,111.15,150.425,TopLayer,180
+R5_ch3,130.07,150.248,TopLayer,180
+R5_ch2,133.6234,114.1188,TopLayer,0
+R4_ch4,111.85,148.575,TopLayer,270
+R4_ch3,130.77,148.398,TopLayer,270
+R4_ch2,132.9234,115.9688,TopLayer,90
+R3_ch4,115.3,148.5504,TopLayer,270
+R3_ch3,134.22,148.3734,TopLayer,270
+R3_ch2,129.4734,115.9934,TopLayer,90
+R2_ch4,116,150.4004,TopLayer,180
+R2_ch3,134.92,150.2234,TopLayer,180
+R2_ch2,128.7734,114.1434,TopLayer,0
+R1_ch4,116.7,148.5504,TopLayer,270
+R1_ch3,135.62,148.3734,TopLayer,270
+R1_ch2,128.0734,115.9934,TopLayer,90
+C8_ch4,111.15,146.725,TopLayer,180
+C8_ch3,130.07,146.548,TopLayer,180
+C8_ch2,133.6234,117.8188,TopLayer,0
+C7_ch4,116,146.7004,TopLayer,180
+C7_ch3,134.92,146.5234,TopLayer,180
+C7_ch2,128.7734,117.8434,TopLayer,0
+C6_ch4,117.183,144.5604,TopLayer,90
+C6_ch3,136.103,144.3834,TopLayer,90
+C6_ch2,127.5904,119.9834,TopLayer,270
+C5_ch4,108.7,144.925,TopLayer,270
+C5_ch3,127.62,144.748,TopLayer,270
+C5_ch2,136.0734,119.6188,TopLayer,90
+C4_ch4,109.3,147.45,TopLayer,270
+C4_ch3,128.22,147.273,TopLayer,270
+C4_ch2,135.4734,117.0938,TopLayer,90
+C3_ch4,113,147.4,TopLayer,90
+C3_ch3,131.92,147.223,TopLayer,90
+C3_ch2,131.7734,117.1438,TopLayer,270
+C2_ch4,114.1418,147.4052,TopLayer,270
+C2_ch3,133.0618,147.2282,TopLayer,270
+C2_ch2,130.6316,117.1386,TopLayer,90
+C1_ch4,117.85,147.4254,TopLayer,90
+C1_ch3,136.77,147.2484,TopLayer,90
+C1_ch2,126.9234,117.1184,TopLayer,270
+R8_ch1,120.3,119.625,TopLayer,270
+R7_ch1,121.55,119.625,TopLayer,270
+C5_ch1,119.1,119.625,TopLayer,90
+C4_ch1,118.5,117.1,TopLayer,90
+R6_ch1,117.35,115.975,TopLayer,90
+R5_ch1,116.65,114.125,TopLayer,0
+C8_ch1,116.65,117.825,TopLayer,0
+C3_ch1,114.8,117.15,TopLayer,270
+U1_ch1,114.8675,123.25,TopLayer,0
+R4_ch1,115.95,115.975,TopLayer,90
+R3_ch1,112.5,115.9996,TopLayer,90
+R2_ch1,111.8,114.1496,TopLayer,0
+R1_ch1,111.1,115.9996,TopLayer,90
+P1,143.1,131.2,BottomLayer,90
+C6_ch1,110.617,119.9896,TopLayer,270
+C7_ch1,111.8,117.8496,TopLayer,0
+C1_ch1,109.95,117.1246,TopLayer,270

@@ -1,0 +1,48 @@
+Altium Designer Pick and Place Locations,,,,
+C:\Users\gregg\repos\power-meter\lower-pcb\./\assembly\Pick Place\Pick Place for lower-pcb.csv,,,,
+,,,,
+========================================================================================================================,,,,
+File Design Information:,,,,
+,,,,
+Date:       15.01.24,,,,
+Time:       18:22,,,,
+Revision:   abfb595d6ad4cbec96cba308f040f5ff920c88ea,,,,
+Variant:    No variations,,,,
+Units used: mm,,,,
+,,,,
+Designator,Center-X(mm),Center-Y(mm),Layer,Rotation
+F1,102.23,115.9,TopLayer,90
+R29,119,138.75,TopLayer,90
+R28,110.2,138.75,TopLayer,90
+R27,136.6,138.75,TopLayer,90
+R26,127.8,138.75,TopLayer,90
+P1,144.2,140.9,TopLayer,270
+MOV1,103.85,152,TopLayer,90
+C1,122.6,167.5,TopLayer,90
+R15,108.7,123.09,TopLayer,90
+R4,126.3,128.31,TopLayer,90
+R5,126.3,133.53,TopLayer,90
+R3,126.3,123.09,TopLayer,90
+R20,117.5,117.87,TopLayer,90
+R9,135.1,123.09,TopLayer,90
+R19,117.5,112.65,TopLayer,90
+R17,108.7,133.53,TopLayer,90
+R14,108.7,117.87,TopLayer,90
+R6,124.8,138.75,TopLayer,90
+R12,133.6,138.75,TopLayer,90
+R10,135.1,128.31,TopLayer,90
+R22,117.5,128.31,TopLayer,90
+R18,107.2,138.75,TopLayer,90
+R1,126.3,112.65,TopLayer,90
+R23,117.5,133.53,TopLayer,90
+R11,135.1,133.53,TopLayer,90
+R24,116,138.75,TopLayer,90
+R21,117.5,123.09,TopLayer,90
+R7,135.1,112.65,TopLayer,90
+R13,108.7,112.65,TopLayer,90
+R8,135.1,117.87,TopLayer,90
+R16,108.7,128.31,TopLayer,90
+R2,126.3,117.87,TopLayer,90
+U1,124.25,151.75,TopLayer,0
+J2,123.2,104.6,TopLayer,180
+J1,122.75,178.95,TopLayer,180
