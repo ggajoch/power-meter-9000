@@ -35,7 +35,7 @@ uart:
   rx_pin: GPIO39
   baud_rate: 4800
   parity: NONE
-  stop_bits: 2
+  stop_bits: 1
 
 external_components:
     source: github://ggajoch/power-meter-9000

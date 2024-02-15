@@ -1,6 +1,8 @@
 #include "bl0939.h"
 #include "esphome/core/log.h"
 
+// #include "esphome/components/uart/uart_component_esp32_arduino.h"
+
 namespace esphome {
 namespace bl0939 {
 
@@ -35,7 +37,7 @@ void BL0939::loop() {
   if (this->waiting) {
     if (this->available() < sizeof(DataPacket)) {
       if (millis() - this->time_update_start > 1000) {
-        ESP_LOGW(TAG, "BL0939 %d did not respond within 1 second.", this->address_);
+        ESP_LOGW(TAG, "BL0939 %d did not respond within 1 second. received %d of %d", this->address_, this->available(), sizeof(DataPacket));
         while (read() >= 0);
         this->waiting = false;
         bl0939_global_lock.unlock();
@@ -97,9 +99,15 @@ void BL0939::update() {
 }
 
 void BL0939::setup() {
+  delay(1000);
   needs_updating = false;
   time_update_start = 0;
   waiting = false;
+
+  // force 1.5 stop bits - works only on arduino esp32 backend
+  // esphome::uart::ESP32ArduinoUARTComponent* dev = reinterpret_cast<esphome::uart::ESP32ArduinoUARTComponent*>(this->parent_);
+  // auto serial = dev->get_hw_serial();
+  // serial->begin(4800, 134217772);
 
   const uint8_t BL0939_INIT[6][6] = {
     // Reset to default
