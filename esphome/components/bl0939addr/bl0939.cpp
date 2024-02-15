@@ -35,7 +35,7 @@ void BL0939::loop() {
   if (this->waiting) {
     if (this->available() < sizeof(DataPacket)) {
       if (millis() - this->time_update_start > 1000) {
-        ESP_LOGW(TAG, "BL0939 did not respond within 1 second.");
+        ESP_LOGW(TAG, "BL0939 %d did not respond within 1 second.", this->address_);
         while (read() >= 0);
         this->waiting = false;
         bl0939_global_lock.unlock();
@@ -49,7 +49,7 @@ void BL0939::loop() {
         received_package_(&buffer);
       }
     } else {
-      ESP_LOGW(TAG, "Junk on wire. Throwing away partial message");
+      ESP_LOGW(TAG, "Junk on wire at %d. Throwing away partial message", this->address_);
       while (read() >= 0);
     }
     this->waiting = false;
@@ -86,7 +86,7 @@ bool BL0939::validate_checksum(const DataPacket *data) {
   }
   checksum ^= 0xFF;
   if (checksum != data->checksum) {
-    ESP_LOGW(TAG, "BL0939 invalid checksum! 0x%02X != 0x%02X", checksum, data->checksum);
+    ESP_LOGW(TAG, "BL0939 %d invalid checksum! 0x%02X != 0x%02X", this->address_, checksum, data->checksum);
   }
   return checksum == data->checksum;
 }
@@ -127,7 +127,7 @@ void BL0939::setup() {
 void BL0939::received_package_(const DataPacket *data) const {
   // Bad header
   if (data->frame_header != BL0939_PACKET_HEADER) {
-    ESP_LOGI("bl0939", "Invalid data. Header mismatch: %d", data->frame_header);
+    ESP_LOGI("bl0939", "BL0939 %d invalid data. Header mismatch: %d", this->address_, data->frame_header);
     return;
   }
 
@@ -167,7 +167,7 @@ void BL0939::received_package_(const DataPacket *data) const {
     energy_sensor_sum_->publish_state(total_energy_consumption);
   }
 
-  ESP_LOGV("bl0939", "BL0939: U %fV, I1 %fA, I2 %fA, P1 %fW, P2 %fW, CntA %d, CntB %d, ∫P1 %fkWh, ∫P2 %fkWh", v_rms,
+  ESP_LOGV("bl0939", "BL0939 %d: U %fV, I1 %fA, I2 %fA, P1 %fW, P2 %fW, CntA %d, CntB %d, ∫P1 %fkWh, ∫P2 %fkWh", this->address_, v_rms,
            ia_rms, ib_rms, a_watt, b_watt, cfa_cnt, cfb_cnt, a_energy_consumption, b_energy_consumption);
 }
 
