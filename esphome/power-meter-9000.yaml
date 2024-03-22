@@ -3,7 +3,7 @@ esphome:
   friendly_name: power-meter-9000
 
 esp32:
-  board: esp32-s2-saola-1
+  board: lolin_s2_mini
   framework:
     type: arduino
 
@@ -16,8 +16,7 @@ api:
 ota:
 
 wifi:
-  ssid: power-meter-9000
-  password: power-meter-9000
+  output_power: 15
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
