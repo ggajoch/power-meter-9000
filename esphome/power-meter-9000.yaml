@@ -1,6 +1,7 @@
 esphome:
   name: power-meter-9000
   friendly_name: power-meter-9000
+  name_add_mac_suffix: true
 
 esp32:
   board: lolin_s2_mini
@@ -9,7 +10,7 @@ esp32:
 
 # Enable logging
 logger:
-  level: DEBUG
+  level: WARN
 
 api:
 
@@ -18,7 +19,7 @@ ota:
 wifi:
   output_power: 15
 
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  # Enable hotspot (captive portal) to provision WiFi
   ap:
     ssid: power-meter-9000
     password: power-meter-9000
