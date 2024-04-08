@@ -17,7 +17,7 @@ api:
 ota:
 
 wifi:
-  output_power: 15
+  output_power: 8.5
 
   # Enable hotspot (captive portal) to provision WiFi
   ap:
@@ -40,24 +40,24 @@ sensor:
   - platform: uptime
     name: Uptime
   - platform: bl0939addr
-    id: ch0
+    id: chA
     update_interval: 10s
     voltage:
-      name: 'v1'
+      name: 'v_A'
     current_1:
-      name: 'c1_1'
+      name: 'c_A1'
     current_2:
-      name: 'c1_2'
+      name: 'c_A2'
     active_power_1:
-      name: 'p1_1'
+      name: 'p_A1'
     active_power_2:
-      name: 'p1_2'
+      name: 'p_A2'
     energy_1:
-      name: 'e1_1'
+      name: 'e_A1'
     energy_2:
-      name: 'e1_2'
+      name: 'e_A2'
     energy_total:
-      name: 'e1'
+      name: 'e_A'
     address: 0
     current_reference: 438921.675
     voltage_reference: 16740.165
@@ -68,21 +68,21 @@ sensor:
     id: ch1
     update_interval: 10s
     voltage:
-      name: 'v2'
+      name: 'v_B'
     current_1:
-      name: 'c2_1'
+      name: 'c_B1'
     current_2:
-      name: 'c2_2'
+      name: 'c_B2'
     active_power_1:
-      name: 'p2_1'
+      name: 'p_B1'
     active_power_2:
-      name: 'p2_2'
+      name: 'p_B2'
     energy_1:
-      name: 'e2_1'
+      name: 'e_B1'
     energy_2:
-      name: 'e2_2'
+      name: 'e_B2'
     energy_total:
-      name: 'e2'
+      name: 'e_B'
     address: 1
     current_reference: 438921.675
     voltage_reference: 16740.165
@@ -93,21 +93,21 @@ sensor:
     id: ch2
     update_interval: 10s
     voltage:
-      name: 'v3'
+      name: 'v_C'
     current_1:
-      name: 'c3_1'
+      name: 'c_C1'
     current_2:
-      name: 'c3_2'
+      name: 'c_C2'
     active_power_1:
-      name: 'p3_1'
+      name: 'p_C1'
     active_power_2:
-      name: 'p3_2'
+      name: 'p_C2'
     energy_1:
-      name: 'e3_1'
+      name: 'e_C1'
     energy_2:
-      name: 'e3_2'
+      name: 'e_C2'
     energy_total:
-      name: 'e3'
+      name: 'e_C'
     address: 2
     current_reference: 438921.675
     voltage_reference: 16740.165
@@ -118,21 +118,21 @@ sensor:
     id: ch3
     update_interval: 10s
     voltage:
-      name: 'v4'
+      name: 'v_D'
     current_1:
-      name: 'c4_1'
+      name: 'c_D1'
     current_2:
-      name: 'c4_2'
+      name: 'c_D2'
     active_power_1:
-      name: 'p4_1'
+      name: 'p_D1'
     active_power_2:
-      name: 'p4_2'
+      name: 'p_D2'
     energy_1:
-      name: 'e4_1'
+      name: 'e_D1'
     energy_2:
-      name: 'e4_2'
+      name: 'e_D2'
     energy_total:
-      name: 'e4'
+      name: 'e_D'
     address: 3
     current_reference: 438921.675
     voltage_reference: 16740.165
