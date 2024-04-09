@@ -28,7 +28,7 @@ ESP32-S2 is a brain of the power meter, running esphome. Schematics/PCBs are in 
 ![top view](docs/top.jpg)
 
  - decide on the power lines you want to measure
- - connect neutral to top terminal (either one - they are connected internally, and two if you would want to daisy-chain the power meters 9000)
+ - connect neutral to top terminal (either one - they are connected internally, and there are two if you would want to daisy-chain the power meters 9000)
  - for each power line, find the corresponding phase it belongs to (L1, L2, L3)
  - connect voltage inputs to corresponding terminals (Va, Vb, Vc, Vd)
  - install current clamps on the measurement lines
