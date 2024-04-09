@@ -1,6 +1,5 @@
 esphome:
   name: power-meter-9000
-  friendly_name: power-meter-9000
   name_add_mac_suffix: true
 
 esp32:
