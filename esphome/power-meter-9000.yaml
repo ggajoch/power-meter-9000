@@ -16,7 +16,7 @@ api:
 ota:
 
 wifi:
-  output_power: 8.5
+  output_power: 11
 
   # Enable hotspot (captive portal) to provision WiFi
   ap:
