@@ -78,9 +78,11 @@ void BL0939::loop() {
       }
     }
     if (!clean) {
+      delay(20);
+      bl0939_global_lock.unlock();
       return;
     }
-    
+
     needs_updating = false;
 
     // request data from sensor
