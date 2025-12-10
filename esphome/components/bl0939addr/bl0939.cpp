@@ -90,8 +90,8 @@ void BL0939::loop() {
 
 
     // this->flush();
-    this->write_byte(this->read_command());
-    this->write_byte(BL0939_FULL_PACKET);
+    // this->write_byte(this->read_command());
+    // this->write_byte(BL0939_FULL_PACKET);
     this->time_update_start = millis();
 
     this->waiting = true;
