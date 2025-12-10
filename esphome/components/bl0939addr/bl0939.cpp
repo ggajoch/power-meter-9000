@@ -71,6 +71,12 @@ void BL0939::loop() {
     // request data from sensor
     ESP_LOGW(TAG, "BL0939 updating %d", this->address_);
 
+    // clean receive buffer
+    ESP_LOGW(TAG, "Flushing receive buffer, %d bytes", this->available());
+    while (this->available() > 0) {
+      this->read();
+    }
+
     // this->flush();
     this->write_byte(this->read_command());
     this->write_byte(BL0939_FULL_PACKET);
