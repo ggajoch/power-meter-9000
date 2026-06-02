@@ -30,6 +30,7 @@ CONF_CURRENT_REFERENCE = "current_reference"
 CONF_VOLTAGE_REFERENCE = "voltage_reference"
 CONF_POWER_REFERENCE = "power_reference"
 CONF_ENERGY_REFERENCE = "energy_reference"
+CONF_WA_CREEP = "wa_creep"
 
 
 # https://datasheet.lcsc.com/lcsc/2108071830_BL-Shanghai-Belling-BL0939_C2841044.pdf
@@ -102,6 +103,7 @@ CONFIG_SCHEMA = (
             cv.Optional(CONF_VOLTAGE_REFERENCE, default=default_voltage_reference): cv.float_,
             cv.Optional(CONF_POWER_REFERENCE, default=default_power_reference): cv.float_,
             cv.Optional(CONF_ENERGY_REFERENCE, default=default_energy_reference): cv.float_,
+            cv.Optional(CONF_WA_CREEP, default=0x0B): cv.uint8_t,
         }
     )
     .extend(cv.polling_component_schema("60s"))
@@ -150,3 +152,5 @@ async def to_code(config):
         cg.add(var.set_power_reference(power_reference_config))
     if energy_reference_config := config.get(CONF_ENERGY_REFERENCE):
         cg.add(var.set_energy_reference(energy_reference_config))
+    if wa_creep_config := config.get(CONF_WA_CREEP):
+        cg.add(var.set_wa_creep(wa_creep_config))

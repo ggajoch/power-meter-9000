@@ -62,6 +62,10 @@ class BL0939 : public PollingComponent, public uart::UARTDevice {
   void set_voltage_reference(float voltage_reference) { voltage_reference_ = voltage_reference; }
   void set_power_reference(float power_reference) { power_reference_ = power_reference; }
   void set_energy_reference(float energy_reference) { energy_reference_ = energy_reference; }
+  void set_wa_creep(uint8_t v) { wa_creep_ = v; }
+  uint8_t wa_creep_{0x0B};
+  bool read_reg24_(uint8_t reg, uint32_t *out);
+  bool write_reg24_(uint8_t reg, uint32_t value24);
 
   void loop() override;
 
