@@ -21,6 +21,7 @@ static const uint8_t BL0939_REG_MODE = 0x18;
 static const uint8_t BL0939_REG_SOFT_RESET = 0x19;
 static const uint8_t BL0939_REG_USR_WRPROT = 0x1A;
 static const uint8_t BL0939_REG_TPS_CTRL = 0x1B;
+static const uint8_t BL0939_REG_WA_CREEP = 0x17;
 
 static Mutex bl0939_global_lock;
 
@@ -30,6 +31,66 @@ uint8_t BL0939::write_command() {
 
 uint8_t BL0939::read_command() {
   return BL0939_READ_COMMAND | this->address_;
+}
+
+uint8_t bl0939_write_checksum(uint8_t cmd, uint8_t reg, uint8_t d0, uint8_t d1, uint8_t d2) {
+  uint8_t sum = cmd;
+  sum += reg;
+  sum += d0;
+  sum += d1;
+  sum += d2;
+  sum ^= 0xFF;
+  return sum;
+}
+
+void bl0939_write_reg24(esphome::bl0939::BL0939 *dev, uint8_t reg, uint32_t value24) {
+  // BL0939 uses little-endian payload ordering in these init frames:
+  // examples in your code: reg MODE 0x18 with 0x00,0x10,0x00 == 0x001000
+  uint8_t d0 = (value24 >> 16) & 0xFF;  // H
+  uint8_t d1 = (value24 >> 8) & 0xFF;   // M
+  uint8_t d2 = (value24 >> 0) & 0xFF;   // L
+
+  uint8_t cmd = dev->write_command();
+  uint8_t frame[6] = {cmd, reg, d0, d1, d2, bl0939_write_checksum(cmd, reg, d0, d1, d2)};
+  dev->write_array(frame, 6);
+  delay(1);
+}
+
+
+static uint8_t bl0939_checksum(uint8_t cmd, uint8_t addr, uint8_t dl, uint8_t dm, uint8_t dh) {
+  uint8_t sum = cmd + addr + dl + dm + dh;
+  return sum ^ 0xFF;
+}
+
+bool BL0939::read_reg24_(uint8_t reg, uint32_t *out) {
+  // TX: [READCMD][REG]
+  this->write_byte(this->read_command());
+  this->write_byte(reg);
+
+  // datasheet: device replies with 3 data bytes + checksum (low..high) :contentReference[oaicite:8]{index=8}
+  uint8_t dl=0, dm=0, dh=0, cs=0;
+  if (!this->read_byte(&dl)) return false;
+  if (!this->read_byte(&dm)) return false;
+  if (!this->read_byte(&dh)) return false;
+  if (!this->read_byte(&cs)) return false;
+
+  uint8_t exp = bl0939_checksum(this->read_command(), reg, dl, dm, dh);
+  if (cs != exp) return false;
+
+  *out = ((uint32_t)dh << 16) | ((uint32_t)dm << 8) | dl;
+  return true;
+}
+
+bool BL0939::write_reg24_(uint8_t reg, uint32_t value24) {
+  uint8_t dl = (value24 >> 0) & 0xFF;
+  uint8_t dm = (value24 >> 8) & 0xFF;
+  uint8_t dh = (value24 >> 16) & 0xFF;
+
+  uint8_t cmd = this->write_command();
+  uint8_t frame[6] = {cmd, reg, dl, dm, dh, bl0939_checksum(cmd, reg, dl, dm, dh)};
+  this->write_array(frame, 6);
+  delay(2);
+  return true;
 }
 
 void BL0939::loop() {
@@ -127,6 +188,26 @@ void BL0939::setup() {
     this->write_array(i, 6);
     delay(1);
   }
+
+  // --- Anti-creep threshold ---
+  // Default is 0x0B
+  // uint32_t wc = this->wa_creep_;
+  // bl0939_write_reg24(this, BL0939_REG_WA_CREEP, (wc << 16) | (wc << 8) | wc);
+  //bl0939_write_reg24(this, BL0939_REG_WA_CREEP, ((uint32_t)this->wa_creep_) << 16);
+
+  // unlock
+  this->write_reg24_(BL0939_REG_USR_WRPROT, 0x000055);  // L=0x55, reszta 0 :contentReference[oaicite:9]{index=9}
+  delay(2);
+
+  // write WA_CREEP
+  this->write_reg24_(BL0939_REG_WA_CREEP, (uint32_t)(this->wa_creep_ & 0xFF));
+  delay(2);
+
+  // readback
+  uint32_t rb = 0;
+  bool ok = this->read_reg24_(BL0939_REG_WA_CREEP, &rb);
+  ESP_LOGI(TAG, "WA_CREEP write=0x%02X readback=%s 0x%06X", this->wa_creep_, ok ? "OK" : "FAIL", rb);
+
   this->flush();
 
   bl0939_global_lock.unlock();
