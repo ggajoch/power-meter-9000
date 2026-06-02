@@ -66,6 +66,7 @@ sensor:
     voltage_reference: 16740.165
     power_reference: 1147.908
     energy_reference: 9852.572
+    wa_creep: 0x5E
 
   - platform: bl0939addr
     id: ch1
@@ -91,6 +92,7 @@ sensor:
     voltage_reference: 16740.165
     power_reference: 1147.908
     energy_reference: 9852.572
+    wa_creep: 0x5E
   
   - platform: bl0939addr
     id: ch2
@@ -116,6 +118,7 @@ sensor:
     voltage_reference: 16740.165
     power_reference: 1147.908
     energy_reference: 9852.572
+    wa_creep: 0x5E
 
   - platform: bl0939addr
     id: ch3
@@ -141,6 +144,7 @@ sensor:
     voltage_reference: 16740.165
     power_reference: 1147.908
     energy_reference: 9852.572
+    wa_creep: 0x5E
 
 switch:
   - platform: gpio
