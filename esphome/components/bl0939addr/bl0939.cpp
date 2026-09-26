@@ -129,10 +129,15 @@ void BL0939::setup() {
   }
   this->flush();
 
+  // soft reset above zeroed the chip counters; start accumulating from here
+  this->last_cf_cnt_[0] = this->last_cf_cnt_[1] = 0;
+  this->energy_pulses_[0] = this->energy_pulses_[1] = 0;
+  this->last_packet_ms_ = millis();
+
   bl0939_global_lock.unlock();
 }
 
-void BL0939::received_package_(const DataPacket *data) const {
+void BL0939::received_package_(const DataPacket *data) {
   // Bad header
   if (data->frame_header != BL0939_PACKET_HEADER) {
     ESP_LOGI("bl0939", "BL0939 %d invalid data. Header mismatch: %d", this->address_, data->frame_header);
@@ -144,11 +149,20 @@ void BL0939::received_package_(const DataPacket *data) const {
   float ib_rms = (float) to_uint32_t(data->ib_rms) / current_reference_;
   float a_watt = (float) to_int32_t(data->a_watt) / power_reference_;
   float b_watt = (float) to_int32_t(data->b_watt) / power_reference_;
-  int32_t cfa_cnt = to_int32_t(data->cfa_cnt);
-  int32_t cfb_cnt = to_int32_t(data->cfb_cnt);
-  float a_energy_consumption = (float) cfa_cnt / energy_reference_;
-  float b_energy_consumption = (float) cfb_cnt / energy_reference_;
-  float total_energy_consumption = a_energy_consumption + b_energy_consumption;
+  uint32_t cfa_cnt = to_uint32_t(data->cfa_cnt);
+  uint32_t cfb_cnt = to_uint32_t(data->cfb_cnt);
+  uint32_t now_ms = millis();
+  // max plausible pulses since the last packet: max_power [W] over dt, in kWh, times pulses per kWh
+  float dt_h = (float) (now_ms - this->last_packet_ms_) / 3.6e6f;
+  int32_t max_delta = (int32_t) (this->max_power_ / 1000.0f * dt_h * this->energy_reference_) + 1;
+  this->energy_pulses_[0] += cf_delta(this->last_cf_cnt_[0], cfa_cnt, max_delta);
+  this->energy_pulses_[1] += cf_delta(this->last_cf_cnt_[1], cfb_cnt, max_delta);
+  this->last_cf_cnt_[0] = cfa_cnt;
+  this->last_cf_cnt_[1] = cfb_cnt;
+  this->last_packet_ms_ = now_ms;
+  float a_energy_consumption = (float) this->energy_pulses_[0] / energy_reference_;
+  float b_energy_consumption = (float) this->energy_pulses_[1] / energy_reference_;
+  float total_energy_consumption = (float) (this->energy_pulses_[0] + this->energy_pulses_[1]) / energy_reference_;
 
   if (voltage_sensor_ != nullptr) {
     voltage_sensor_->publish_state(v_rms);
@@ -175,7 +189,7 @@ void BL0939::received_package_(const DataPacket *data) const {
     energy_sensor_sum_->publish_state(total_energy_consumption);
   }
 
-  ESP_LOGV("bl0939", "BL0939 %d: U %fV, I1 %fA, I2 %fA, P1 %fW, P2 %fW, CntA %d, CntB %d, ∫P1 %fkWh, ∫P2 %fkWh", this->address_, v_rms,
+  ESP_LOGV("bl0939", "BL0939 %d: U %fV, I1 %fA, I2 %fA, P1 %fW, P2 %fW, CntA %u, CntB %u, ∫P1 %fkWh, ∫P2 %fkWh", this->address_, v_rms,
            ia_rms, ib_rms, a_watt, b_watt, cfa_cnt, cfb_cnt, a_energy_consumption, b_energy_consumption);
 }
 
