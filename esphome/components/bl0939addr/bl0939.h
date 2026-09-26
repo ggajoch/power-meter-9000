@@ -96,10 +96,13 @@ class BL0939 : public PollingComponent, public uart::UARTDevice {
   float max_power_{10000.0f};
 
   // CF_CNT is 24-bit and wraps at 2^24 (1702 kWh at the default energy_reference),
-  // so energy is accumulated here from signed deltas. Resets to 0 with the ESP (setup() soft-resets the chip).
+  // so energy is accumulated here from signed deltas. The chip keeps counting across a
+  // SOFT_RESET, so a reboot takes a baseline from the first packet: energy restarts at 0,
+  // same as after a power cycle.
   int64_t energy_pulses_[2]{0, 0};
   uint32_t last_cf_cnt_[2]{0, 0};
   uint32_t last_packet_ms_{0};
+  bool have_baseline_{false};
 
   static uint32_t to_uint32_t(ube24_t input);
 

@@ -129,8 +129,8 @@ void BL0939::setup() {
   }
   this->flush();
 
-  // soft reset above zeroed the chip counters; start accumulating from here
-  this->last_cf_cnt_[0] = this->last_cf_cnt_[1] = 0;
+  // the soft reset above does not clear CF_CNT; the first packet sets the baseline
+  this->have_baseline_ = false;
   this->energy_pulses_[0] = this->energy_pulses_[1] = 0;
   this->last_packet_ms_ = millis();
 
@@ -152,6 +152,11 @@ void BL0939::received_package_(const DataPacket *data) {
   uint32_t cfa_cnt = to_uint32_t(data->cfa_cnt);
   uint32_t cfb_cnt = to_uint32_t(data->cfb_cnt);
   uint32_t now_ms = millis();
+  if (!this->have_baseline_) {
+    this->last_cf_cnt_[0] = cfa_cnt;
+    this->last_cf_cnt_[1] = cfb_cnt;
+    this->have_baseline_ = true;
+  }
   // max plausible pulses since the last packet: max_power [W] over dt, in kWh, times pulses per kWh
   float dt_h = (float) (now_ms - this->last_packet_ms_) / 3.6e6f;
   int32_t max_delta = (int32_t) (this->max_power_ / 1000.0f * dt_h * this->energy_reference_) + 1;

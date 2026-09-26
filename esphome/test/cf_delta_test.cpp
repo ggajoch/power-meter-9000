@@ -16,7 +16,7 @@ int main() {
   assert(cf_delta(0x7FFFF0, 0x800010, MAX) == 32);      // crossing 2^23 (the old signed-read bug) is nothing special
   assert(cf_delta(500000, 20, MAX) == 20);              // chip reset: counter restarted from 0
   assert(cf_delta(500000, 0xFFFFFB, MAX) == -5);        // chip reset while exporting
-  assert(cf_delta(0, 0, MAX) == 0);                     // first packet after boot, idle
+  assert(cf_delta(123456, 123456, MAX) == 0);           // first packet after boot: baseline, no energy yet
   printf("cf_delta OK\n");
   return 0;
 }
