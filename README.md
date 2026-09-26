@@ -69,3 +69,15 @@ By default, output_power of Wi-Fi is set to 11 dBm. If you have weak Wi-Fi, you 
 ## I get correct reading of current, but power is not measured correctly
 
 Have you connected properly current clamp to the same phase as the corresponding voltage input?
+
+## Energy went negative or jumped after around 850 kWh
+
+Firmware before PR #4 (September 2026) read the BL0939 energy counter as a signed 24-bit value, so a channel flipped negative after 2^23 pulses (about 851 kWh) and wrapped to 0 at about 1702 kWh. Update the firmware: the counter is now accumulated on the ESP with wrap handling, so energy grows without limit.
+
+Negative energy is still valid when a clamp sees power flowing the other way, for example a grid feed with PV export. Energy is counted net: import adds, export subtracts.
+
+## Energy resets to 0 after a reboot or OTA
+
+By design. The chip keeps counting across an ESP reboot, but the firmware cannot tell how the counter got there, so every boot starts energy at 0. Home Assistant treats it as a meter reset (`total_increasing`) and keeps long-term statistics continuous. Only the consumption during the reboot itself is lost.
+
+If a channel's energy jumps by more than `max_power` (default 10000 W per channel) times the time since the last reading, the firmware assumes the chip reset its counter (brownout) and continues from the new value. Set `max_power` on the `bl0939addr` platform if a single channel can exceed 10 kW.
