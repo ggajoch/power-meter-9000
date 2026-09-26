@@ -30,6 +30,7 @@ CONF_CURRENT_REFERENCE = "current_reference"
 CONF_VOLTAGE_REFERENCE = "voltage_reference"
 CONF_POWER_REFERENCE = "power_reference"
 CONF_ENERGY_REFERENCE = "energy_reference"
+CONF_MAX_POWER = "max_power"
 
 
 # https://datasheet.lcsc.com/lcsc/2108071830_BL-Shanghai-Belling-BL0939_C2841044.pdf
@@ -102,6 +103,8 @@ CONFIG_SCHEMA = (
             cv.Optional(CONF_VOLTAGE_REFERENCE, default=default_voltage_reference): cv.float_,
             cv.Optional(CONF_POWER_REFERENCE, default=default_power_reference): cv.float_,
             cv.Optional(CONF_ENERGY_REFERENCE, default=default_energy_reference): cv.float_,
+            # [W] per channel; a CF_CNT jump above max_power*dt is treated as a chip counter reset, not consumption
+            cv.Optional(CONF_MAX_POWER, default=10000): cv.positive_float,
         }
     )
     .extend(cv.polling_component_schema("60s"))
@@ -150,3 +153,4 @@ async def to_code(config):
         cg.add(var.set_power_reference(power_reference_config))
     if energy_reference_config := config.get(CONF_ENERGY_REFERENCE):
         cg.add(var.set_energy_reference(energy_reference_config))
+    cg.add(var.set_max_power(config[CONF_MAX_POWER]))

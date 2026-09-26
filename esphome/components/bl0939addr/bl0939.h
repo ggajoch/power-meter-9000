@@ -3,6 +3,7 @@
 #include "esphome/core/component.h"
 #include "esphome/components/uart/uart.h"
 #include "esphome/components/sensor/sensor.h"
+#include "cf_delta.h"
 
 namespace esphome {
 namespace bl0939 {
@@ -37,8 +38,8 @@ union DataPacket {  // NOLINT(altera-struct-pack-align)
     ube24_t ib_fast_rms;
     sbe24_t a_watt;
     sbe24_t b_watt;
-    sbe24_t cfa_cnt;
-    sbe24_t cfb_cnt;
+    ube24_t cfa_cnt;
+    ube24_t cfb_cnt;
     ube16_t tps1;
     uint8_t RESERVED1;  // value of 0x00
     ube16_t tps2;
@@ -62,6 +63,7 @@ class BL0939 : public PollingComponent, public uart::UARTDevice {
   void set_voltage_reference(float voltage_reference) { voltage_reference_ = voltage_reference; }
   void set_power_reference(float power_reference) { power_reference_ = power_reference; }
   void set_energy_reference(float energy_reference) { energy_reference_ = energy_reference; }
+  void set_max_power(float max_power) { max_power_ = max_power; }
 
   void loop() override;
 
@@ -90,6 +92,17 @@ class BL0939 : public PollingComponent, public uart::UARTDevice {
   float power_reference_{0.0f};
   // Divide by this to turn into kWh
   float energy_reference_{0.0f};
+  // Max plausible power per channel [W]; a bigger jump of CF_CNT means the chip reset its counter
+  float max_power_{10000.0f};
+
+  // CF_CNT is 24-bit and wraps at 2^24 (1702 kWh at the default energy_reference),
+  // so energy is accumulated here from signed deltas. The chip keeps counting across a
+  // SOFT_RESET, so a reboot takes a baseline from the first packet: energy restarts at 0,
+  // same as after a power cycle.
+  int64_t energy_pulses_[2]{0, 0};
+  uint32_t last_cf_cnt_[2]{0, 0};
+  uint32_t last_packet_ms_{0};
+  bool have_baseline_{false};
 
   static uint32_t to_uint32_t(ube24_t input);
 
@@ -97,7 +110,7 @@ class BL0939 : public PollingComponent, public uart::UARTDevice {
 
   bool validate_checksum(const DataPacket *data);
 
-  void received_package_(const DataPacket *data) const;
+  void received_package_(const DataPacket *data);
 
   uint8_t write_command();
 
