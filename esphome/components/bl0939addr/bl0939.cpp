@@ -21,6 +21,7 @@ static const uint8_t BL0939_REG_MODE = 0x18;
 static const uint8_t BL0939_REG_SOFT_RESET = 0x19;
 static const uint8_t BL0939_REG_USR_WRPROT = 0x1A;
 static const uint8_t BL0939_REG_TPS_CTRL = 0x1B;
+static const uint8_t BL0939_REG_WA_CREEP = 0x17;
 
 static Mutex bl0939_global_lock;
 
@@ -30,6 +31,41 @@ uint8_t BL0939::write_command() {
 
 uint8_t BL0939::read_command() {
   return BL0939_READ_COMMAND | this->address_;
+}
+
+static uint8_t bl0939_checksum(uint8_t cmd, uint8_t addr, uint8_t dl, uint8_t dm, uint8_t dh) {
+  uint8_t sum = cmd + addr + dl + dm + dh;
+  return sum ^ 0xFF;
+}
+
+bool BL0939::read_reg24_(uint8_t reg, uint32_t *out) {
+  // TX: [READCMD][REG]
+  this->write_byte(this->read_command());
+  this->write_byte(reg);
+
+  // device replies with 3 data bytes (low..high) + checksum
+  uint8_t dl=0, dm=0, dh=0, cs=0;
+  if (!this->read_byte(&dl)) return false;
+  if (!this->read_byte(&dm)) return false;
+  if (!this->read_byte(&dh)) return false;
+  if (!this->read_byte(&cs)) return false;
+
+  uint8_t exp = bl0939_checksum(this->read_command(), reg, dl, dm, dh);
+  if (cs != exp) return false;
+
+  *out = ((uint32_t)dh << 16) | ((uint32_t)dm << 8) | dl;
+  return true;
+}
+
+void BL0939::write_reg24_(uint8_t reg, uint32_t value24) {
+  uint8_t dl = (value24 >> 0) & 0xFF;
+  uint8_t dm = (value24 >> 8) & 0xFF;
+  uint8_t dh = (value24 >> 16) & 0xFF;
+
+  uint8_t cmd = this->write_command();
+  uint8_t frame[6] = {cmd, reg, dl, dm, dh, bl0939_checksum(cmd, reg, dl, dm, dh)};
+  this->write_array(frame, 6);
+  delay(2);
 }
 
 void BL0939::loop() {
@@ -127,6 +163,17 @@ void BL0939::setup() {
     this->write_array(i, 6);
     delay(1);
   }
+
+  // the init table checksums above are only valid for address 5, so unlock again with a computed checksum
+  this->write_reg24_(BL0939_REG_USR_WRPROT, 0x55);
+  this->write_reg24_(BL0939_REG_WA_CREEP, this->wa_creep_);
+  uint32_t rb = 0;
+  bool ok = this->read_reg24_(BL0939_REG_WA_CREEP, &rb);
+  if (!ok || rb != this->wa_creep_) {
+    ESP_LOGW(TAG, "BL0939 %d WA_CREEP write 0x%02X failed, readback %s 0x%06X", this->address_, this->wa_creep_,
+             ok ? "OK" : "FAIL", (unsigned) rb);
+  }
+
   this->flush();
 
   // the soft reset above does not clear CF_CNT; the first packet sets the baseline
