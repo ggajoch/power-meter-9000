@@ -171,7 +171,7 @@ void BL0939::setup() {
   bool ok = this->read_reg24_(BL0939_REG_WA_CREEP, &rb);
   if (!ok || rb != this->wa_creep_) {
     ESP_LOGW(TAG, "BL0939 %d WA_CREEP write 0x%02X failed, readback %s 0x%06X", this->address_, this->wa_creep_,
-             ok ? "OK" : "FAIL", rb);
+             ok ? "OK" : "FAIL", (unsigned) rb);
   }
 
   this->flush();
