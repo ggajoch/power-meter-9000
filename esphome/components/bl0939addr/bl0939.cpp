@@ -148,6 +148,9 @@ void BL0939::setup() {
   // USR_WRPROT guards SOFT_RESET too, and the reset locks writes again
   this->write_reg24_(BL0939_REG_USR_WRPROT, 0x55);
   this->write_reg24_(BL0939_REG_SOFT_RESET, 0x5A5A5A);
+  // ponytail: reset time is not in the datasheet, 50 ms is a guess; frames sent right after the reset seem to be dropped
+  this->flush();
+  delay(50);
   this->write_reg24_(BL0939_REG_USR_WRPROT, 0x55);
 
   const uint32_t BL0939_INIT[5][2] = {
@@ -164,12 +167,15 @@ void BL0939::setup() {
   for (auto *i : BL0939_INIT) {
     this->write_reg24_(i[0], i[1]);
   }
+  this->flush();  // writes are buffered; let them go out before the readback starts its 100 ms read timeout
   for (auto *i : BL0939_INIT) {
     uint32_t rb = 0;
     bool ok = this->read_reg24_(i[0], &rb);
     if (!ok || rb != i[1]) {
-      ESP_LOGW(TAG, "BL0939 %d reg 0x%02X write 0x%06X failed, readback %s 0x%06X", this->address_, (unsigned) i[0],
-               (unsigned) i[1], ok ? "OK" : "FAIL", (unsigned) rb);
+      char buf[48];
+      snprintf(buf, sizeof(buf), " 0x%02X=0x%06X (read %s 0x%06X)", (unsigned) i[0], (unsigned) i[1], ok ? "OK" : "FAIL",
+               (unsigned) rb);
+      this->init_errors_ += buf;
     }
   }
 
@@ -246,6 +252,9 @@ void BL0939::received_package_(const DataPacket *data) {
 
 void BL0939::dump_config() {  // NOLINT(readability-function-cognitive-complexity)
   ESP_LOGCONFIG(TAG, "BL0939:");
+  if (!this->init_errors_.empty()) {
+    ESP_LOGW(TAG, "BL0939 %d register write failed:%s", this->address_, this->init_errors_.c_str());
+  }
   LOG_SENSOR("", "Voltage", this->voltage_sensor_);
   LOG_SENSOR("", "Current 1", this->current_sensor_1_);
   LOG_SENSOR("", "Current 2", this->current_sensor_2_);
