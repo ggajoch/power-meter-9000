@@ -148,9 +148,9 @@ void BL0939::setup() {
   // USR_WRPROT guards SOFT_RESET too, and the reset locks writes again
   this->write_reg24_(BL0939_REG_USR_WRPROT, 0x55);
   this->write_reg24_(BL0939_REG_SOFT_RESET, 0x5A5A5A);
-  // ponytail: reset time is not in the datasheet, 50 ms is a guess; frames sent right after the reset seem to be dropped
+  // ponytail: reset time is not in the datasheet, 100 ms is a guess (50 ms worked); frames sent right after the reset seem to be dropped
   this->flush();
-  delay(50);
+  delay(100);
   this->write_reg24_(BL0939_REG_USR_WRPROT, 0x55);
 
   const uint32_t BL0939_INIT[5][2] = {
