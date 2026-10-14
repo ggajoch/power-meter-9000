@@ -156,5 +156,4 @@ async def to_code(config):
     if energy_reference_config := config.get(CONF_ENERGY_REFERENCE):
         cg.add(var.set_energy_reference(energy_reference_config))
     cg.add(var.set_max_power(config[CONF_MAX_POWER]))
-    if wa_creep_config := config.get(CONF_WA_CREEP):
-        cg.add(var.set_wa_creep(wa_creep_config))
+    cg.add(var.set_wa_creep(config[CONF_WA_CREEP]))
