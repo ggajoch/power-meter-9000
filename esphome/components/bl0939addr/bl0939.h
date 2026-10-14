@@ -108,6 +108,9 @@ class BL0939 : public PollingComponent, public uart::UARTDevice {
   uint32_t last_packet_ms_{0};
   bool have_baseline_{false};
 
+  // register readback mismatches from setup(), logged in dump_config() so they also show over the API
+  std::string init_errors_;
+
   static uint32_t to_uint32_t(ube24_t input);
 
   static int32_t to_int32_t(sbe24_t input);

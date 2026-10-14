@@ -145,33 +145,38 @@ void BL0939::setup() {
   // auto serial = dev->get_hw_serial();
   // serial->begin(4800, 134217772);
 
-  const uint8_t BL0939_INIT[6][6] = {
-    // Reset to default
-    {this->write_command(), BL0939_REG_SOFT_RESET, 0x5A, 0x5A, 0x5A, 0x33},
-    // Enable User Operation Write
-    {this->write_command(), BL0939_REG_USR_WRPROT, 0x55, 0x00, 0x00, 0xEB},
-    // 0x0100 = CF_UNABLE energy pulse, AC_FREQ_SEL 50Hz, RMS_UPDATE_SEL 800mS
-    {this->write_command(), BL0939_REG_MODE, 0x00, 0x10, 0x00, 0x32},
-    // 0x47FF = Over-current and leakage alarm on, Automatic temperature measurement, Interval 100mS
-    {this->write_command(), BL0939_REG_TPS_CTRL, 0xFF, 0x47, 0x00, 0xF9},
+  // USR_WRPROT guards SOFT_RESET too, and the reset locks writes again
+  this->write_reg24_(BL0939_REG_USR_WRPROT, 0x55);
+  this->write_reg24_(BL0939_REG_SOFT_RESET, 0x5A5A5A);
+  // ponytail: reset time is not in the datasheet, 100 ms is a guess (50 ms worked); frames sent right after the reset seem to be dropped
+  this->flush();
+  delay(100);
+  this->write_reg24_(BL0939_REG_USR_WRPROT, 0x55);
+
+  const uint32_t BL0939_INIT[5][2] = {
+    // 0x1000 = CF pin as alarm output (CF_UNABLE), AC_FREQ_SEL 50Hz, RMS_UPDATE_SEL 400mS
+    {BL0939_REG_MODE, 0x1000},
+    // 0x47FF = A channel over-current alarm on CF (B channel is always on I_leak), automatic temperature measurement, interval 100mS
+    {BL0939_REG_TPS_CTRL, 0x47FF},
     // 0x181C = Half cycle, Fast RMS threshold 6172
-    {this->write_command(), BL0939_REG_IA_FAST_RMS_CTRL, 0x1C, 0x18, 0x00, 0x16},
+    {BL0939_REG_IA_FAST_RMS_CTRL, 0x181C},
     // 0x181C = Half cycle, Fast RMS threshold 6172
-    {this->write_command(), BL0939_REG_IB_FAST_RMS_CTRL, 0x1C, 0x18, 0x00, 0x08}};
+    {BL0939_REG_IB_FAST_RMS_CTRL, 0x181C},
+    {BL0939_REG_WA_CREEP, this->wa_creep_}};
 
   for (auto *i : BL0939_INIT) {
-    this->write_array(i, 6);
-    delay(1);
+    this->write_reg24_(i[0], i[1]);
   }
-
-  // the init table checksums above are only valid for address 5, so unlock again with a computed checksum
-  this->write_reg24_(BL0939_REG_USR_WRPROT, 0x55);
-  this->write_reg24_(BL0939_REG_WA_CREEP, this->wa_creep_);
-  uint32_t rb = 0;
-  bool ok = this->read_reg24_(BL0939_REG_WA_CREEP, &rb);
-  if (!ok || rb != this->wa_creep_) {
-    ESP_LOGW(TAG, "BL0939 %d WA_CREEP write 0x%02X failed, readback %s 0x%06X", this->address_, this->wa_creep_,
-             ok ? "OK" : "FAIL", (unsigned) rb);
+  this->flush();  // writes are buffered; let them go out before the readback starts its 100 ms read timeout
+  for (auto *i : BL0939_INIT) {
+    uint32_t rb = 0;
+    bool ok = this->read_reg24_(i[0], &rb);
+    if (!ok || rb != i[1]) {
+      char buf[48];
+      snprintf(buf, sizeof(buf), " 0x%02X=0x%06X (read %s 0x%06X)", (unsigned) i[0], (unsigned) i[1], ok ? "OK" : "FAIL",
+               (unsigned) rb);
+      this->init_errors_ += buf;
+    }
   }
 
   this->flush();
@@ -247,6 +252,9 @@ void BL0939::received_package_(const DataPacket *data) {
 
 void BL0939::dump_config() {  // NOLINT(readability-function-cognitive-complexity)
   ESP_LOGCONFIG(TAG, "BL0939:");
+  if (!this->init_errors_.empty()) {
+    ESP_LOGW(TAG, "BL0939 %d register write failed:%s", this->address_, this->init_errors_.c_str());
+  }
   LOG_SENSOR("", "Voltage", this->voltage_sensor_);
   LOG_SENSOR("", "Current 1", this->current_sensor_1_);
   LOG_SENSOR("", "Current 2", this->current_sensor_2_);
