@@ -81,3 +81,19 @@ Negative energy is still valid when a clamp sees power flowing the other way, fo
 By design. The chip keeps counting across an ESP reboot, but the firmware cannot tell how the counter got there, so every boot starts energy at 0. Home Assistant treats it as a meter reset (`total_increasing`) and keeps long-term statistics continuous. Only the consumption during the reboot itself is lost.
 
 If a channel's energy jumps by more than `max_power` (default 10000 W per channel) times the time since the last reading, the firmware assumes the chip reset its counter (brownout) and continues from the new value. Set `max_power` on the `bl0939addr` platform if a single channel can exceed 10 kW.
+
+## Idle channel shows -1 W, or a small load shows 0 W and 0 A
+
+The BL0939 has an anti-creep threshold (WA_CREEP register): below it, the chip reports 0 W, 0 A and counts no energy, so board noise does not add up as consumption. The firmware keeps the chip default `0x0B`, about 0.23 W. If an idle channel shows -1 W, raise `wa_creep` on the `bl0939addr` platform:
+
+| `wa_creep` | Threshold |
+|---|---|
+| `0` | off |
+| `0x0B` (default) | 0.23 W |
+| `0x2F` | 1 W |
+| `0x5E` | 2 W |
+| `0xFF` (max) | 5.4 W |
+
+Threshold [W] = `wa_creep` × 24.414 / `power_reference`, so about `wa_creep` / 47 with the default `power_reference: 1147.908`.
+
+Mind low power factor standby loads: an air conditioner on standby drew 0.19 A but only 2 W, so with `0x5E` it flickered between 0 W / 0 A and 2 W / 0.19 A.
